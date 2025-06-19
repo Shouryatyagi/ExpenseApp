@@ -11,9 +11,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // ✅ new syntax in Spring Security 6
+                .csrf(csrf -> csrf.disable()) // disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/expense/signup").permitAll()
+                        .requestMatchers("/expense/signup", "/expense/users").permitAll()
                         .anyRequest().authenticated()
                 );
 
