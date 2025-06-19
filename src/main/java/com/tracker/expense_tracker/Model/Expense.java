@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Expense {
 
-    @Id @NonNull
+    @Id
+    @NonNull
     private ObjectId eid; // Primary Key
 
     private ObjectId userId; // Foreign Key (reference to User._id)
