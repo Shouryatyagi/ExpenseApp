@@ -1,6 +1,5 @@
 package com.tracker.expense_tracker.Controller;
 
-
 import com.tracker.expense_tracker.Dao.LoginDao;
 import com.tracker.expense_tracker.Dao.SignUpDao;
 import com.tracker.expense_tracker.Model.User;
@@ -9,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.tracker.expense_tracker.Dao.BudgetDao;
+import com.tracker.expense_tracker.Service.BudgetService;
+import com.tracker.expense_tracker.Dao.ExpenseDao;
+import com.tracker.expense_tracker.Service.ExpenseService;
 
 import java.util.List;
 
@@ -50,6 +53,24 @@ public class ExpenseAppController {
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
         }
+    }
+
+
+    @Autowired
+    private BudgetService budgetService;
+
+    @PostMapping("/add-budget")
+    public String addBudget(@RequestBody BudgetDao budgetDao) {
+        return budgetService.addBudget(budgetDao);
+    }
+
+
+    @Autowired
+    private ExpenseService expenseService;
+
+    @PostMapping("/add-expense")
+    public String addExpense(@RequestBody ExpenseDao expenseDao) {
+        return expenseService.addExpense(expenseDao);
     }
 
 
