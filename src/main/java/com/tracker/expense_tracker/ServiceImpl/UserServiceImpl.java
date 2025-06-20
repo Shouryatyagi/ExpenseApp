@@ -23,15 +23,24 @@ public class UserServiceImpl implements UserService {
 
     public String signup(SignUpDao userEntry){
         try {
-            User user = new User();
-            user.setName(userEntry.getName());
-            user.setEmail(userEntry.getEmail());
+            // Step 1: Get user by email
+            User user = userRepo.findByEmail(userEntry.getEmail());
 
-            String plainPassword = userEntry.getPassword();
-            String hashedPassword = passwordEncoder.encode(plainPassword);
-            user.setPassword(hashedPassword);
-            userRepo.save(user);
-            return "Signup Succesfully";
+            // Step 2: Check if user exists
+            if (user == null) {
+                user.setName(userEntry.getName());
+                user.setEmail(userEntry.getEmail());
+
+                String plainPassword = userEntry.getPassword();
+                String hashedPassword = passwordEncoder.encode(plainPassword);
+                user.setPassword(hashedPassword);
+                userRepo.save(user);
+                return "Signup Succesfully";
+            }
+            else{
+                return "User already exists!";
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

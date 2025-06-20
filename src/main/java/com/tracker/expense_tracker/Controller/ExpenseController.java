@@ -17,10 +17,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/expense")
-public class ExpenseAppController {
+public class ExpenseController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private BudgetService budgetService;
+
+    @Autowired
+    private ExpenseService expenseService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignUpDao userEntry){
@@ -56,17 +62,12 @@ public class ExpenseAppController {
     }
 
 
-    @Autowired
-    private BudgetService budgetService;
 
     @PostMapping("/add-budget")
     public String addBudget(@RequestBody BudgetDao budgetDao) {
         return budgetService.addBudget(budgetDao);
     }
 
-
-    @Autowired
-    private ExpenseService expenseService;
 
     @PostMapping("/add-expense")
     public String addExpense(@RequestBody ExpenseDao expenseDao) {
