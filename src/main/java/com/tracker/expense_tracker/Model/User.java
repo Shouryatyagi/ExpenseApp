@@ -30,6 +30,7 @@ public class User implements Serializable {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
+    @DBRef
+    List<Expense> expense = new ArrayList<>();
 
 }

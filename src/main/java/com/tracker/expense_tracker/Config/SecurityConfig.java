@@ -1,5 +1,7 @@
 package com.tracker.expense_tracker.Config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +18,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/expense/signup", "/expense/users", "/expense/login", "/expense/deleteAllUser").permitAll()
+                        .requestMatchers(("/**")).permitAll()
                         .anyRequest().authenticated()
                 );
 
@@ -27,4 +29,10 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer customizer() {
+//        return builder -> builder.featuresToEnable(DeserializationFeature.READ_ENUMS_USING_TO_STRING)
+//                .featuresToEnable(DeserializationFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
+//    }
 }
