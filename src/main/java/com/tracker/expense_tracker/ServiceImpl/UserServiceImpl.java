@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
             User user = userRepo.findByEmail(userEntry.getEmail());
 
             // Step 2: Check if user exists
-            if (user == null) {
+            if (ObjectUtils.isEmpty(user)) {
+                user = new User();
                 user.setName(userEntry.getName());
                 user.setEmail(userEntry.getEmail());
 
@@ -36,12 +37,11 @@ public class UserServiceImpl implements UserService {
                 String hashedPassword = passwordEncoder.encode(plainPassword);
                 user.setPassword(hashedPassword);
                 userRepo.save(user);
-                return "Signup Succesfully";
+                return "Signup Successfully";
             }
             else{
                 return "User already exists!";
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
