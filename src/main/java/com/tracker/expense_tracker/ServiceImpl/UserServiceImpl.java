@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -72,6 +73,23 @@ public class UserServiceImpl implements UserService {
         List<User> user = userRepo.findAll();
         return user;
     }
+
+    public String deleteAll(){
+        List<User> user = userRepo.findAll();
+        try {
+            if(!ObjectUtils.isEmpty(user)){
+                userRepo.deleteAll();
+                return "Successfully deleted";
+            }
+            else{
+                return "No user found";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error during login: " + e.getMessage());
+        }
+
+    }
+
 
 
 }

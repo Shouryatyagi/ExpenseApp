@@ -11,4 +11,5 @@ public interface UserService {
     public String signup(SignUpDao sign);
     public List<User> getUser();
     public String login(LoginDao login);
+    public String deleteAll();
 }
