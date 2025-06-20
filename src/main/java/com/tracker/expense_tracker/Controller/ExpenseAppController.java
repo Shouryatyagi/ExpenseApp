@@ -1,6 +1,7 @@
 package com.tracker.expense_tracker.Controller;
 
 
+import com.tracker.expense_tracker.Dao.LoginDao;
 import com.tracker.expense_tracker.Dao.SignUpDao;
 import com.tracker.expense_tracker.Model.User;
 import com.tracker.expense_tracker.ServiceImpl.UserServiceImpl;
@@ -34,6 +35,17 @@ public class ExpenseAppController {
         try{
             List<User> user = userServiceImpl.getUser();
             return new ResponseEntity<>(user, HttpStatus.CREATED);
+
+        } catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDao userEntry){
+        try{
+            String message = userServiceImpl.login(userEntry);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
 
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
