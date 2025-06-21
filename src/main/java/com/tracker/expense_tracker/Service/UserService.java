@@ -12,4 +12,5 @@ public interface UserService {
     public List<User> getUser();
     public String login(LoginDao login);
     public String deleteAll();
+    public String getId(String email);
 }

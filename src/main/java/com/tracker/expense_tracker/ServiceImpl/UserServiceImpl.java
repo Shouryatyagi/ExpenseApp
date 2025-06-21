@@ -87,6 +87,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public String getId(String email){
+        User user = userRepo.findByEmail(email);
+        String result = user.getId().toString();
+        return result;
+    }
+
 
 
 }

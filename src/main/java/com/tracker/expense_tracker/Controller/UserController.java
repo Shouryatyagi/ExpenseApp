@@ -59,7 +59,7 @@ public class UserController {
     }
 
     //Delete all users stored in DB
-    @GetMapping("deleteAllUser")
+    @GetMapping("/deleteAllUser")
     public ResponseEntity<?> deleteAll(){
         try{
             String message = userServiceImpl.deleteAll();
@@ -68,5 +68,11 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PostMapping("/getId/{email}")
+    public String getId(@PathVariable String email){
+        String result = userServiceImpl.getId(email);
+        return result;
     }
 }
