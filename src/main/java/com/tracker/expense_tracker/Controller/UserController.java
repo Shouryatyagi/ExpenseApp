@@ -51,7 +51,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginDao userEntry){
         try{
             String message = userServiceImpl.login(userEntry);
-            return new ResponseEntity<>(message, HttpStatus.CREATED);
+            return new ResponseEntity<>(message, HttpStatus.OK);
 
         } catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;

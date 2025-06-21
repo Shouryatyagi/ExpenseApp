@@ -30,6 +30,9 @@ public class User implements Serializable {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    // May cause error if there is large data,
+    // Solution - Store only the ids of expense not the entire object
     @DBRef
     List<Expense> expense = new ArrayList<>();
 

@@ -10,20 +10,20 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Document(collection = "expense")
 @Data
 @NoArgsConstructor
-public class Expense {
+public class Expense implements Serializable {
 
     @Id
     @NonNull
     private ObjectId eid; // Primary Key
 
     @NonNull
-    @DBRef
     private ObjectId userId; // Foreign Key (reference to User._id)
 
     private BigDecimal amount;
