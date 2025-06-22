@@ -31,6 +31,14 @@ public class User implements Serializable {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    private Role role=Role.User;
+
+    public enum Role {
+       User,
+        Admin
+    }
+
+
     // May cause error if there is large data,
     // Solution - Store only the ids of expense not the entire object
     @DBRef
