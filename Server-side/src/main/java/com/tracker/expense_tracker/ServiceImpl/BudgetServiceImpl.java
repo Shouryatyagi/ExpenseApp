@@ -33,4 +33,27 @@ public class BudgetServiceImpl implements BudgetService {
             throw new RuntimeException("Failed to save budget: " + e.getMessage());
         }
     }
+
+    @Override
+    public Budget getBudget(ObjectId id) {
+         try{
+Budget budget = new Budget();
+return budget;
+         }
+         catch(Exception e){
+             throw new RuntimeException("Failed to get budget: " + e.getMessage());
+         }
+    }
+
+    @Override
+    public void updateBudget(ObjectId userId, BudgetDao budgetDao) {
+
+    }
+
+    @Override
+    public void deleteBudget(ObjectId userId) {
+
+    }
+
+
 }

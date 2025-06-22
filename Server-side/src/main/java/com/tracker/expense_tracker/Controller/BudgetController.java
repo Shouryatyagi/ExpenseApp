@@ -2,6 +2,7 @@ package com.tracker.expense_tracker.Controller;
 
 import com.tracker.expense_tracker.Dao.BudgetDao;
 import com.tracker.expense_tracker.Service.BudgetService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,4 +18,10 @@ public class BudgetController {
         return budgetService.addBudget(budgetDao);
 
     }
+
+    // get budget
+//    @PostMapping("/get-budget")
+//    public BudgetDao getBudget(ObjectId userId) {
+//        return budgetService.getBudget(userId);
+//    }
 }
