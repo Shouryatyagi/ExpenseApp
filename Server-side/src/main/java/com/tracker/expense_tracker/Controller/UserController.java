@@ -16,7 +16,7 @@ import com.tracker.expense_tracker.Service.ExpenseService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("/expense-app")
 public class UserController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     //Get all users stored in DB
-    @GetMapping("/users")
+    @GetMapping("/get-users")
     public ResponseEntity<?> getUsers(){
         try{
             List<User> user = userServiceImpl.getUser();
@@ -59,7 +59,7 @@ public class UserController {
     }
 
     //Delete all users stored in DB
-    @GetMapping("/deleteAllUser")
+    @GetMapping("/deleteallusers")
     public ResponseEntity<?> deleteAll(){
         try{
             String message = userServiceImpl.deleteAll();

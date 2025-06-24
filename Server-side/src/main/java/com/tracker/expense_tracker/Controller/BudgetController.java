@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("/expense-app")
 public class BudgetController {
     @Autowired
     private BudgetService budgetService;

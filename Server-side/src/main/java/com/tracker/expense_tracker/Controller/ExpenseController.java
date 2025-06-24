@@ -21,7 +21,7 @@ import java.util.List;
 // /update-expense/{id} - expense - update expense by id
 
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("/expense-app")
 public class ExpenseController {
     @Autowired
     private ExpenseService expenseService;
@@ -49,7 +49,7 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping("/get-all-expense/{userId}")
+    @GetMapping("/get-all-expenses/{userId}")
     public ResponseEntity<?> getAllExpense(@PathVariable ObjectId userId){
         try{
             List<Expense> expenselist = expenseService.getAllExpense(userId);
@@ -60,7 +60,7 @@ public class ExpenseController {
         }
     }
 
-    @DeleteMapping("/delete-all-expense/{userId}")
+    @DeleteMapping("/delete-all-expenses/{userId}")
     public ResponseEntity<?> deleteAllExpense(@PathVariable ObjectId userId){
         try{
             String message = expenseService.deleteAll(userId);
