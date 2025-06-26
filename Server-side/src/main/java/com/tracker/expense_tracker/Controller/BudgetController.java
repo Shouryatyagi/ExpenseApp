@@ -21,18 +21,19 @@ public class BudgetController {
         return ResponseEntity.ok(budget);
     }
 
-    @PostMapping("/get-budget")
-    public ResponseEntity<?> getBudget(@RequestBody BudgetDao dao) {
+    @GetMapping("/get-budget")
+    public ResponseEntity<?> getBudget(@RequestParam String userId,
+                                       @RequestParam Integer month,
+                                       @RequestParam Integer year) {
         try {
-            ObjectId objectId = new ObjectId(dao.getUserId());
-            Integer month = dao.getMonth();
-            Integer year = dao.getYear();
+            ObjectId objectId = new ObjectId(userId);
+            BudgetDao dao = new BudgetDao();
+            dao.setUserId(userId);
+            dao.setMonth(month);
+            dao.setYear(year);
 
-            if (month == null || year == null) {
-                return ResponseEntity.badRequest().body("Month and year are required.");
-            }
+            Budget budget = budgetService.getBudget(dao);
 
-            Budget budget = budgetService.getBudget(objectId, month, year);
             if (budget == null) {
                 return ResponseEntity.notFound().build();
             }

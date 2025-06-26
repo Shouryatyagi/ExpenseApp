@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface BudgetService {
     Budget saveOrUpdateBudget(BudgetDao dao);
-    Budget getBudget( @RequestBody BudgetDao dao);
+    Budget getBudget( BudgetDao dao);
 }
