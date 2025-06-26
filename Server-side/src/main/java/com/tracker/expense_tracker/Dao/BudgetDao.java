@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 @Data
 public class BudgetDao {
 
-    private ObjectId userId;
+    private String userId;
     private String category;
     private Double amount;
     private Integer month;

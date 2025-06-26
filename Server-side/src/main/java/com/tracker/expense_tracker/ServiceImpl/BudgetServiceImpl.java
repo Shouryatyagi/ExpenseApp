@@ -9,51 +9,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class BudgetServiceImpl implements BudgetService {
+
     @Autowired
-    private BudgetRepo budgetRepo;
+    private BudgetRepo budgetRepository;
 
     @Override
-    public String addBudget(BudgetDao budgetDao) {
-        try {
-            Budget budget = new Budget();
-            budget.setUserId(budgetDao.getUserId());
-            budget.setCategory(budgetDao.getCategory());
-            budget.setAmount(budgetDao.getAmount());
-            budget.setMonth(budgetDao.getMonth());
-            budget.setYear(budgetDao.getYear());
-            budget.setCreatedAt(LocalDateTime.now());
+    public Budget saveOrUpdateBudget(BudgetDao dao) {
+        ObjectId objectId = new ObjectId(dao.getUserId());
+
+        Optional<Budget> existing = budgetRepository.findByUserIdAndMonthAndYear(
+                objectId,
+                dao.getMonth(),
+                dao.getYear()
+        );
+
+        Budget budget;
+        if (existing.isPresent()) {
+            budget = existing.get();
+            budget.setAmount(dao.getAmount());
+            budget.setCategory(dao.getCategory());
             budget.setUpdatedAt(LocalDateTime.now());
-
-            budgetRepo.save(budget);
-            return "Budget saved successfully";
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to save budget: " + e.getMessage());
+        } else {
+            budget = new Budget();
+            budget.setUserId(objectId);
+            budget.setAmount(dao.getAmount());
+            budget.setCategory(dao.getCategory());
+            budget.setMonth(dao.getMonth());
+            budget.setYear(dao.getYear());
+            budget.setCreatedAt(LocalDateTime.now());
         }
+
+        return budgetRepository.save(budget);
     }
 
     @Override
-    public Budget getBudget(ObjectId id) {
-         try{
-Budget budget = new Budget();
-return budget;
-         }
-         catch(Exception e){
-             throw new RuntimeException("Failed to get budget: " + e.getMessage());
-         }
+    public Budget getBudget(BudgetDao dao) {
+        ObjectId objectId = new ObjectId(dao.getUserId());
+        return budgetRepository.findByUserIdAndMonthAndYear(objectId, dao.getMonth(), dao.getYear())
+                .orElse(null);
     }
-
-    @Override
-    public void updateBudget(ObjectId userId, BudgetDao budgetDao) {
-
-    }
-
-    @Override
-    public void deleteBudget(ObjectId userId) {
-
-    }
-
-
 }
