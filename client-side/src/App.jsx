@@ -3,7 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import Footer from './components/Footer';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 import Navbar from './components/Navbar';
+import AddExpense from "./pages/AddExpense";
+import AddBudget from "./pages/AddBudget";
 import React, { useState, useEffect } from 'react';
 export default function App() {
       const [username, setUsername] = useState('');
@@ -34,6 +37,9 @@ export default function App() {
               <Routes>
                   <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path ="/add-expense" element={<AddExpense />} />
+                    <Route path ="/add-budget" element={<AddBudget />} />
               </Routes>
 
               <Footer />

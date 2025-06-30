@@ -42,6 +42,7 @@ const Signup = () => {
 
             // Optionally store token or redirect
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("signupMessage", "Signup successful! Please sign in.");
             window.location.href = "/login";
 
         } catch (err) {

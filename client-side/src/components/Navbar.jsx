@@ -8,7 +8,7 @@ const Navbar = ({ username }) => {
         <a href="/budget" className="hover:underline">My Budget</a>
       </div>
       <div className="text-lg font-semibold">
-        {username ? `Welcome, ${username}` : 'Loading...'}
+        {username ? `Welcome, ${username}` : 'Guest'}
       </div>
     </nav>
   );
