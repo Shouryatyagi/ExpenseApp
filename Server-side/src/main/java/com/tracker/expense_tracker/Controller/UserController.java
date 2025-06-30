@@ -16,7 +16,7 @@ import com.tracker.expense_tracker.Service.ExpenseService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3002") // Allow frontend access
+@CrossOrigin(origins = "http://localhost:3000") // Allow frontend access
 @RequestMapping("/expense-app")
 public class UserController {
 
