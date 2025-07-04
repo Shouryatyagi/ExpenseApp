@@ -4,6 +4,7 @@ import com.tracker.expense_tracker.Dao.LoginDao;
 import com.tracker.expense_tracker.Dao.SignUpDao;
 import com.tracker.expense_tracker.Model.User;
 import com.tracker.expense_tracker.ServiceImpl.UserServiceImpl;
+import com.tracker.expense_tracker.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,14 +50,8 @@ public class UserController {
 
     //Login
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDao userEntry){
-        try{
-            String message = userServiceImpl.login(userEntry);
-            return new ResponseEntity<>(message, HttpStatus.OK);
-
-        } catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST) ;
-        }
+    public ResponseEntity<Response> login(@RequestBody LoginDao userEntry){
+        return userServiceImpl.login(userEntry);
     }
 
     //Delete all users stored in DB

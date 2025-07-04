@@ -3,9 +3,13 @@ package com.tracker.expense_tracker.ServiceImpl;
 import com.tracker.expense_tracker.Dao.SignUpDao;
 import com.tracker.expense_tracker.Dao.LoginDao;
 import com.tracker.expense_tracker.Model.User;
+import com.tracker.expense_tracker.Projections.UserLoginProjection;
 import com.tracker.expense_tracker.Repo.UserRepo;
 import com.tracker.expense_tracker.Service.UserService;
+import com.tracker.expense_tracker.Utils.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ObjectUtils;
@@ -43,26 +47,28 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
-
-    public String login(LoginDao userEntry) {
+    public ResponseEntity<Response> login(LoginDao userEntry) {
+        Response response = new Response();
         try {
-            // Step 1: Get user by email
             User user = userRepo.findByEmail(userEntry.getEmail());
-
-            // Step 2: Check if user exists
-            if (user == null) {
-                return "User not found";
+            if(!ObjectUtils.isEmpty(user)){
+                UserLoginProjection userProj = new UserLoginProjection();
+                if (passwordEncoder.matches(userEntry.getPassword(), user.getPassword())) {
+                    userProj.setName(user.getName());
+                    userProj.setEmail(user.getEmail());
+                    response = handleApiResponse("Successful",200,"Successfully login",userProj);
+                }
+                else {
+                    response = handleApiResponse("Unsuccessful", 401, "Invalid password", null);
+                }
             }
-
-            // Step 3: Compare password
-            if (passwordEncoder.matches(userEntry.getPassword(), user.getPassword())) {
-                return "Login successful";
-            } else {
-                return "Invalid password";
+            else{
+                response = handleApiResponse("Unsuccessful",404,"User not found", null);
             }
-
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
-            throw new RuntimeException("Error during login: " + e.getMessage());
+            response = handleApiResponse("Unsuccessful",500,e.getMessage(),null);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -94,5 +100,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
+    public Response handleApiResponse(String status, Integer statusCode, String message, Object response){
+        Response res = new Response();
+        res.setStatus(status);
+        res.setStatusCode(statusCode);
+        res.setMessage(message);
+        res.setResponse(response);
+        return res;
+    }
 }
