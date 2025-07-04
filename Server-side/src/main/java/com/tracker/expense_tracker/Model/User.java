@@ -22,9 +22,12 @@ public class User implements Serializable {
     @Id
     @NonNull
     private ObjectId id;
-
+    
+    @NonNull
     private String name;
+    @NonNull
     private String email;
+    @NonNull
     private String password;
     @CreatedDate
     private LocalDateTime createdAt;
