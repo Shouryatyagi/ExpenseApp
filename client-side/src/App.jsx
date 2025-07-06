@@ -25,7 +25,29 @@ export default function App() {
     };
 
     fetchUsername();
-  }, []);
+  }, []);useEffect(() => {
+  const fetchUsername = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch('http://localhost:8080/expense-app/me', {
+        headers: {
+          // Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) throw new Error("User not authenticated");
+
+      const data = await response.json();
+      setUsername(data.username);
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
+      setUsername(""); 
+    }
+  };
+
+  fetchUsername();
+}, []);
+
   return (
     
       <>
@@ -36,7 +58,7 @@ export default function App() {
                  
               </main>
               <Routes>
-                
+                    <Route path="/" element={<Signup/>} />
                   <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/profile" element={<Profile />} />
