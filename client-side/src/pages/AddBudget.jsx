@@ -8,27 +8,9 @@ const AddBudget = () => {
         month: "",
         year: "",
     });
-    const [categories, setCategories] = useState([]);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:8080/expense-app/budget-categories", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                setCategories(res.data);
-            } catch (err) {
-                console.error(err);
-                setError("Failed to load categories.");
-            }
-        };
-
-        fetchCategories();
-    }, []);
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -59,12 +41,7 @@ const AddBudget = () => {
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 {message && <p className="text-green-500 mb-4">{message}</p>}
 
-                <select name="category" value={form.category} onChange={handleChange} required className="input mb-4">
-                    <option value="">Select Category</option>
-                    {categories.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                </select>
+           
 
                 <input name="amount" type="number" value={form.amount} onChange={handleChange} placeholder="Amount" required className="input mb-4" />
                 <input name="month" type="number" value={form.month} onChange={handleChange} placeholder="Month (1-12)" required className="input mb-4" />

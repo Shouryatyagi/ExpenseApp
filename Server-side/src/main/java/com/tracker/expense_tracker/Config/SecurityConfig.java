@@ -36,7 +36,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/expense-app/login", "/expense-app/signup").permitAll() // public endpoints
+                        .requestMatchers("/expense-app/login", "/expense-app/signup", "/api/enums/**").permitAll() // public endpoints
                         .anyRequest().authenticated() // secure everything else
                 )
                 .sessionManagement(session -> session

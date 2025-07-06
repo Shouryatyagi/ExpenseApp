@@ -21,7 +21,6 @@ public class Budget implements Serializable {
     private ObjectId bid;
     @NonNull
     private ObjectId userId;
-    private String category;
     private Double amount;
     private Integer month;
     private Integer year;

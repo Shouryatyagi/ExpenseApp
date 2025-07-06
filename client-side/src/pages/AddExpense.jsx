@@ -10,6 +10,7 @@ const AddExpense = () => {
         date: "",
         location: "",
     });
+
     const [categories, setCategories] = useState([]);
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [message, setMessage] = useState("");
@@ -21,11 +22,11 @@ const AddExpense = () => {
                 const token = localStorage.getItem("token");
 
                 const [catRes, payRes] = await Promise.all([
-                    axios.get("http://localhost:8080/expense-app/categories", {
-                        headers: { Authorization: `Bearer ${token}` },
+                    axios.get("http://localhost:8080/api/enums/categories", {
+                        // headers: { Authorization: `Bearer ${token}` },
                     }),
-                    axios.get("http://localhost:8080/expense-app/payment-methods", {
-                        headers: { Authorization: `Bearer ${token}` },
+                    axios.get("http://localhost:8080/api/enums/payment-methods", {
+                        // headers: { Authorization: `Bearer ${token}` },
                     }),
                 ]);
 
