@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import Navbar from './components/Navbar';
 import AddExpense from "./pages/AddExpense";
 import AddBudget from "./pages/AddBudget";
-// import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 import React, { useState, useEffect } from 'react';
 export default function App() {
       const [username, setUsername] = useState('');
@@ -42,6 +42,7 @@ export default function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path ="/add-expense" element={<AddExpense />} />
                     <Route path ="/add-budget" element={<AddBudget />} />
+                     <Route path="*" element={<NotFound />} /> 
                     
               </Routes>
 

@@ -31,13 +31,11 @@ public class BudgetServiceImpl implements BudgetService {
         if (existing.isPresent()) {
             budget = existing.get();
             budget.setAmount(dao.getAmount());
-            budget.setCategory(dao.getCategory());
             budget.setUpdatedAt(LocalDateTime.now());
         } else {
             budget = new Budget();
             budget.setUserId(objectId);
             budget.setAmount(dao.getAmount());
-            budget.setCategory(dao.getCategory());
             budget.setMonth(dao.getMonth());
             budget.setYear(dao.getYear());
             budget.setCreatedAt(LocalDateTime.now());
