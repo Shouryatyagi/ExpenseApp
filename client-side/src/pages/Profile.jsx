@@ -18,24 +18,25 @@ const Profile = () => {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:8080/expense-app/user", {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
-                const { name, email } = res.data;
-
-                setPlaceholders({ name, email });
-            } catch (err) {
-                console.error(err);
-                setError("Failed to load user data.");
+    const fetchUser = async () => {
+        try {
+            const res = await axios.get("http://localhost:8080/expense-app/login");
+            const userData = res.data?.data;
+            if (userData) {
+                setPlaceholders({ name: userData.name, email: userData.email });
+                setForm({ name: userData.name, email: userData.email, password: "" }); // set directly
+            } else {
+                setError("User data not found.");
             }
-        };
+        } catch (err) {
+            console.error(err);
+            setError("Failed to load user data.");
+        }
+    };
 
-        fetchUser();
-    }, []);
+    fetchUser();
+}, []);
+
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -80,9 +81,11 @@ const Profile = () => {
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder={placeholders.name}
                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700 focus:outline-none"
+
                     />
+
+
                 </div>
 
                 <div className="mb-4">
@@ -90,8 +93,8 @@ const Profile = () => {
                     <input
                         type="email"
                         name="email"
-                        value=""
-                        placeholder={placeholders.email}
+                        value={form.email}
+                       
                         disabled
                         className="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-lg cursor-not-allowed"
                     />
@@ -104,7 +107,7 @@ const Profile = () => {
                         name="password"
                         value={form.password}
                         onChange={handleChange}
-                        placeholder={placeholders.password}
+                      
                         className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700 focus:outline-none"
                     />
                 </div>

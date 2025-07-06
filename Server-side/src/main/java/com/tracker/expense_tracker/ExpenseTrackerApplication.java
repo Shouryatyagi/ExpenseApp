@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.tracker.expense_tracker")
 public class ExpenseTrackerApplication {
 
 	public static void main(String[] args) {

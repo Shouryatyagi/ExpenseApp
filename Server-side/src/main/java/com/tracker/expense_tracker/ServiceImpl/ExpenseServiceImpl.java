@@ -38,7 +38,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             expense.setLocation(dao.getLocation());
             Expense savedExpense = expenseRepo.save(expense);
 
-            Optional<User> optionalUser = userRepo.findById(dao.getUserId());
+            Optional<User> optionalUser = userRepo.findById(dao.getUserId().toString()); // ✅ String
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get(); // Get actual User object
                 user.getExpense().add(expense); // Add expense to user's list
@@ -57,13 +57,13 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     public List<Expense> getAllExpense(ObjectId userId){
-        Optional<User> user = userRepo.findById(userId);
+        Optional<User> user = userRepo.findById(userId.toString());
         List<Expense> result = user.get().getExpense();
         return result;
     }
 
     public String deleteAll(ObjectId userId){
-        Optional<User> user = userRepo.findById(userId);
+        Optional<User> user = userRepo.findById(userId.toString());
         try {
             if(!ObjectUtils.isEmpty(user.get())){
                 user.get().getExpense().clear();

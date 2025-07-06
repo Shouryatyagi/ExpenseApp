@@ -16,7 +16,7 @@ export default function App() {
     // Example fetch from API
     const fetchUsername = async () => {
       try {
-        const response = await fetch('/api/user'); // your real endpoint here
+        const response = await fetch('http://localhost:8080/expense-app/login'); // your real endpoint here
         const data = await response.json();
         setUsername(data.username); // assuming the response looks like { username: "JohnDoe" }
       } catch (error) {

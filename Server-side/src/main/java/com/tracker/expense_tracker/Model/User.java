@@ -36,6 +36,10 @@ public class User implements Serializable {
 
     private Role role=Role.User;
 
+    public String getUsername() {
+        return name;
+    }
+
     public enum Role {
        User,
         Admin

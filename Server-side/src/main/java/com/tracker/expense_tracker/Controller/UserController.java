@@ -48,11 +48,11 @@ public class UserController {
         }
     }
 
-    //Login
-    @PostMapping("/login")
-    public ResponseEntity<Response> login(@RequestBody LoginDao userEntry){
-        return userServiceImpl.login(userEntry);
-    }
+//    //Login
+//    @PostMapping("/login")
+//    public ResponseEntity<Response> login(@RequestBody LoginDao userEntry){
+//        return userServiceImpl.login(userEntry);
+//    }
 
     //Delete all users stored in DB
     @GetMapping("/deleteallusers")
