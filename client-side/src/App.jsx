@@ -1,76 +1,97 @@
-import './index.css'
-import { Routes, Route } from "react-router-dom";
-import Footer from './components/Footer';
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import Navbar from './components/Navbar';
-import AddExpense from "./pages/AddExpense";
-import AddBudget from "./pages/AddBudget";
-import NotFound from "./pages/NotFound";
-import React, { useState, useEffect } from 'react';
-export default function App() {
-      const [username, setUsername] = useState('');
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { ExpenseProvider } from './contexts/ExpenseContext';
+import { ProtectedRoute } from './components/common/ProtectedRoute';
+import { DashboardLayout } from './components/layout/DashboardLayout';
+import { LoginPage } from './pages/auth/LoginPage';
+import { SignupPage } from './pages/auth/SignupPage';
+import { DashboardPage } from './pages/dashboard/DashboardPage';
+import { AddExpensePage } from './pages/dashboard/AddExpensePage';
+import { ExpensesPage } from './pages/dashboard/ExpensesPage';
+import { BudgetsPage } from './pages/dashboard/BudgetsPage';
+import { AnalyticsPage } from './pages/dashboard/AnalyticsPage';
+import { ProfilePage } from './pages/dashboard/ProfilePage';
 
-       useEffect(() => {
-    // Example fetch from API
-    const fetchUsername = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/expense-app/login'); // your real endpoint here
-        const data = await response.json();
-        setUsername(data.username); // assuming the response looks like { username: "JohnDoe" }
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-
-    fetchUsername();
-  }, []);useEffect(() => {
-  const fetchUsername = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch('http://localhost:8080/expense-app/me', {
-        headers: {
-          // Authorization: `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) throw new Error("User not authenticated");
-
-      const data = await response.json();
-      setUsername(data.username);
-    } catch (error) {
-      console.error("Failed to fetch user:", error);
-      setUsername(""); 
-    }
-  };
-
-  fetchUsername();
-}, []);
-
+function App() {
   return (
-    
-      <>
-  
-          <div className="flex flex-col min-h-screen">
-             <Navbar username={username} />
-              <main className="flex-grow">
-                 
-              </main>
-              <Routes>
-                    <Route path="/" element={<Signup/>} />
-                  <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path ="/add-expense" element={<AddExpense />} />
-                    <Route path ="/add-budget" element={<AddBudget />} />
-                     <Route path="*" element={<NotFound />} /> 
-                    
-              </Routes>
-
-              <Footer />
-          </div>
-      </>
-
+    <AuthProvider>
+      <ExpenseProvider>
+        <Router>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            
+            {/* Protected Routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <DashboardPage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/add-expense"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <AddExpensePage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/expenses"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <ExpensesPage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/budgets"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <BudgetsPage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/analytics"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <AnalyticsPage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard/profile"
+              element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <ProfilePage />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              }
+            />
+            
+            {/* Redirect root to login */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Router>
+      </ExpenseProvider>
+    </AuthProvider>
   );
 }
+
+export default App;
