@@ -10,11 +10,9 @@ export const SignupPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,12 +20,6 @@ export const SignupPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
-      setIsSubmitting(false);
-      return;
-    }
 
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters');
@@ -39,6 +31,7 @@ export const SignupPage = () => {
       const success = await signup(formData.name, formData.email, formData.password);
       if (success) {
         navigate('/dashboard');
+
       } else {
         setError('Failed to create account');
       }
@@ -67,16 +60,11 @@ export const SignupPage = () => {
             </div>
             <h1 className="text-3xl font-bold">ExpenseTracker</h1>
           </div>
-          
-          <h2 className="text-2xl font-semibold mb-4">
-            Start Your Financial Journey
-          </h2>
-          
+          <h2 className="text-2xl font-semibold mb-4">Start Your Financial Journey</h2>
           <p className="text-green-100 leading-relaxed">
             Join thousands of users who have transformed their financial habits. 
             Create your account today and take the first step towards financial freedom.
           </p>
-          
           <div className="mt-8 space-y-3">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-green-300 rounded-full"></div>
@@ -101,7 +89,7 @@ export const SignupPage = () => {
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               Create Account
             </h2>
-            
+
             {error && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p className="text-sm text-red-600">{error}</p>
@@ -159,30 +147,6 @@ export const SignupPage = () => {
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                    placeholder="Confirm your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
               </div>
